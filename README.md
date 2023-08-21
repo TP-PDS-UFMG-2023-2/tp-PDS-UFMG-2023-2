@@ -14,7 +14,7 @@ Lucas Rios Bicalho- FullStack
 
 Wilgnert - Frontend
 
-Astris - FullStack
+Alefi Santos Cunha - FullStack
 
 ## Tecnologias
 Frontend - Streamlit
