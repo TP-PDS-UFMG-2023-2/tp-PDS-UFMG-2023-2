@@ -9,14 +9,20 @@ O escopo do trabalho será fazer algo que implemente o básico do sistema acima,
 
 ## Membros do grupo
 Kael Soares Augusto - Backend/Bando de Dados
+
 Lucas Rios Bicalho- FullStack
+
 Wilgnert - Frontend
+
 Astris - FullStack
 
 ## Tecnologias
 Frontend - Streamlit
+
 Backend - Python
+
 Interface entre Front/Back/BD - Python
+
 Banco de dados - SQLite3 como biblioteca do python
 
 Cada uma dos papeis acima serão escritos em arquivos distintos conectados apenas pela interface.
