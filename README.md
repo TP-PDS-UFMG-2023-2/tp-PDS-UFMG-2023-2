@@ -12,7 +12,7 @@ Kael Soares Augusto - Backend/Bando de Dados
 
 Lucas Rios Bicalho- FullStack
 
-Wilgnert - Frontend
+Wilgnert de Alcântara Rodrigues Batista - Frontend
 
 Alefi Santos Cunha - FullStack
 
