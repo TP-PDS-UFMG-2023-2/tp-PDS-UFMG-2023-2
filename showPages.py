@@ -7,7 +7,9 @@ def showPagesAll():
         Page("./dccReview.py", "DCC Rating"),
         Page("./paginasFrontEnd/login.py", "Login"),
         Page("./paginasFrontEnd/materias.py", "Matérias"),
-        Page("./paginasFrontEnd/fazerReviews.py", "Fazer review")
+        Page("./paginasFrontEnd/fazerReviews.py", "Fazer review"),
+        Page("./paginasFrontEnd/quemsomos.py", "Quem Somos?"),
+        Page("./paginasFrontEnd/faq.py", "FAQ")
     ])
 
 
