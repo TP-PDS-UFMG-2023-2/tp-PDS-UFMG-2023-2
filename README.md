@@ -1,4 +1,4 @@
-# tp-PDS-UFMG-2023-2
+![image](https://github.com/TP-PDS-UFMG-2023-2/tp-PDS-UFMG-2023-2/assets/36747760/79adba11-ce48-41e0-b2b3-0feded3c8994)# tp-PDS-UFMG-2023-2
 Repositorio destinado ao trabalho pratico principal da disciplina de pratica e desenvolvimento de software da UFMG no semestre de 2023/2.
 
 ## Objetivo
@@ -85,3 +85,13 @@ https://www.figma.com/file/GgoWNFy6FsBBNRZGE9kFZo/Untitled?type=design&node-id=0
 14. Eu, como gerente do sistema, gostaria de ter um login único e com privilegios maiores
 15. Eu, como aluno e usuário, gostaria de logar no sistema se minha conta for aceita ou ter um aviso que ela está pendente ou recusada
 
+## Documentação da arquitetura
+
+A arquitetura hexagonal foi implementada através da biblioteca ABC do Python: cria-se, no core.py, os métodos abstratos de cada seção, os quais apenas disparam "NotImplementedError". Junta-se vários desses métodos em uma interface, os quais devem ser implementados pelos respectivos módulos. Após isso, o módulo retorna uma classe com a implementação para o core.py. Por fim, o core.py oferece os serviços para o FrontEnd na forma de uma última classe.
+
+O sistema adota essa arquitetura por ser facilitadora e modularizada, o que nos ajuda quanto a testagem que faremos no próximo sprint.
+
+Há três conjuntos principais de portas-adaptadores:
+Um par interfaceHash/implementacaoHash, que disponibiliza para o domínio a possibilidade de criar hashs em SHA256 e verificar;
+Um par interfaceBD/implementacaoBD, que disponibiliza para o domínio a possibilidade de armazenar e manipular um banco de dados;
+Uma classe interfaceFrontEnd, que disponibiliza as funcionalidades do domínio para o FrontEnd utilizar.
