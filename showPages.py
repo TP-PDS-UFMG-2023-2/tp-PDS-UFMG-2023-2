@@ -5,6 +5,7 @@ from st_pages import Page, show_pages, hide_pages
 def showPagesAll():
     show_pages([
         Page("./dccReview.py", "DCC Rating"),
+        Page("./paginasFrontEnd/login.py", "Login"),
         Page("./paginasFrontEnd/materias.py", "Matérias"),
         Page("./paginasFrontEnd/fazerReviews.py", "Fazer review")
     ])
@@ -32,7 +33,7 @@ def pagLogado():
     #    Page("./paginasFrontEnd/quemsomos.py", "Quem somos?"),
     #    Page("./paginasFrontEnd/faq.py", "FAQ")
     #])
-    hide_pages([])
+    hide_pages(["Login"])
 
 def pagAdmin():
     #showPagesAll()
@@ -43,7 +44,7 @@ def pagAdmin():
     #    Page("./paginasFrontEnd/quemsomos.py", "Quem somos?"),
     #    Page("./paginasFrontEnd/faq.py", "FAQ")
     #])
-    hide_pages(["Matérias", "Fazer review"])
+    hide_pages(["Login", "Matérias", "Fazer review"])
 
 def atualizarEstado(estado:str):
     #st.rerun()
