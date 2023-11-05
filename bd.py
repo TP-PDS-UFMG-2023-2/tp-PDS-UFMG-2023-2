@@ -13,6 +13,7 @@ class implementacaoBD(interfaceBD):
         self.verificarTabelaLogins()
         self.verificarTabelaMaterias()
         self.verificarTabelaReviews()
+        self.verificarTabelaImagens()
     
     def __del__(self):
         self.close()
@@ -30,7 +31,9 @@ class implementacaoBD(interfaceBD):
                 login VARCHAR(255),
                 senha VARCHAR(255),
                 permLvl INTEGER,
+                imagem INTEGER,
                 matricula VARCHAR(255),
+                FOREIGN KEY(imagem) REFERENCES imageTable(imageID) ON DELETE SET NULL,
                 UNIQUE(login, senha)
             );
             """)   
@@ -56,6 +59,15 @@ class implementacaoBD(interfaceBD):
                 review VARCHAR(255),
                 FOREIGN KEY(usuario) REFERENCES loginTable(userID) ON DELETE CASCADE,
                 FOREIGN KEY(materia) REFERENCES courseTable(materiaID) ON DELETE CASCADE
+            )
+            """)
+    def verificarTabelaImagens(self):
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS imageTable(
+                imageID INTEGER PRIMARY KEY,
+                imageName VARCHAR(255),
+                imageBinary BLOB
             )
             """)
     
@@ -192,8 +204,132 @@ class implementacaoBD(interfaceBD):
             print(e)
             return -1
         return 0
-    
-    
+    def cadastraImagem(self, usuario, imageName, imageBinary):
+        try:
+            # caso da imagem já estar cadastrada
+            listaPreemptiva = self.getImagemID(imageName, imageBinary)
+            if(len(listaPreemptiva)!=0):
+                idImagem = listaPreemptiva[0]
+                self.cursor.execute(
+                """
+                UPDATE loginTable
+                SET imagem = %d
+                WHERE userID = %d
+                """%(idImagem, usuario))
+                return idImagem
+
+            # cadastra imagem
+            tupla = (imageName, imageBinary)
+            self.cursor.execute(
+                """
+                INSERT INTO imageTable(imageName, imageBinary) VALUES (?, ?);
+                """, tupla)
+
+            listaID = self.getImagemID(imageName, imageBinary)
+            if(len(listaID) == 0):
+                return -1
+            
+            idImagem = listaID[0]
+            
+            self.cursor.execute(
+                """
+                UPDATE loginTable
+                SET imagem = %d
+                WHERE userID = %d
+                """%(idImagem, usuario))
+
+        except Exception as e:
+            print(e)
+            return -1
+        return idImagem
+    def getImagemID(self, imageName, imageBinary):
+        """
+        Retorna lista contendo todos os IDs de imagens, com aquele nome e aquele binary
+        """
+        try:
+            tupla = (imageName, imageBinary)
+
+            self.cursor.execute(
+                """
+                SELECT imageID
+                FROM imageTable
+                WHERE (imageName, imageBinary) = (?, ?);
+                """, tupla)
+            lista = pd.DataFrame(self.cursor.fetchall(), columns=["ImageID"])["ImageID"].to_list()
+        except Exception as e:
+            print(e)
+            return lista
+        return lista
+    def deletaImagem(self, imageID):
+        try:
+            self.cursor.execute(
+                """
+                DELETE FROM imageTable 
+                WHERE imageID = %d;
+                """%imageID)
+        except Exception as e:
+            print(e)
+            return -1
+        return 0
+    def deletaImagemUsuario(self, usuario):
+        try:
+            
+            lista = self.realizaQuery("""
+            SELECT imagem
+            FROM loginTable
+            WHERE userID = %d
+            """%usuario)["imagem"].to_list()
+
+
+            for imageID in lista:
+                if imageID != None:
+                    self.deletaImagem(imageID)
+
+
+        except Exception as e:
+            print(e)
+            return -1
+        
+        return 0
+    def salvaImagemUsuario(self, usuario, filename):
+        """
+        Retorna  0 para sucesso
+        Retorna -1 para erro desconhecido
+        Retorna -2 para usuário não encontrado
+        Retorna -3 para usuário sem foto
+        """
+
+        try:
+            listaImagem = self.realizaQuery("""
+            SELECT imagem
+            FROM loginTable
+            WHERE userID = %d
+            """%usuario)["imagem"].to_list()
+
+            if(len(listaImagem) == 0): # não achou o usuário
+                return -2
+            
+            imagemID = listaImagem[0]
+            if(imagemID == None): # usuário não tem imagem
+                return -3
+            
+            binario = self.realizaQuery("""
+            SELECT imageBinary
+            FROM imageTable
+            WHERE imageID = %d
+            """%imagemID)["imageBinary"].to_list()[0]
+
+            with open(filename, "wb") as file:
+                file.write(binario)
+
+
+            return 0
+        except Exception as e:
+            print(e)
+            return -1
+        
+        return 0
+
     def retornaReviewUsuario(self, usuario, materia):
         """
         Retorna uma lista python contendo usuario (id), matéria (id), a nota dada e a review, nessa ordem
@@ -228,7 +364,7 @@ class implementacaoBD(interfaceBD):
 
     def getUsersPendentes(self):
         x = self.realizaQuery("""
-        SELECT userID, matricula
+        SELECT userID, matricula, imagem
         FROM loginTable
         WHERE permLvl = 0
         """).values.tolist()

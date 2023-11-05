@@ -27,6 +27,10 @@ class interfaceBD(metaclass=abc.ABCMeta):
         raise NotImplementedError
     
     @abc.abstractmethod
+    def cadastraImagem(self, imageName, imageBinary):
+        raise NotImplementedError
+    
+    @abc.abstractmethod
     def aceitaUsuario(self, userID):
         raise NotImplementedError
 
@@ -48,6 +52,10 @@ class interfaceBD(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def cadastraMateria(self, codigoUFMG, nome, nomeProfessor):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def cadastraImagem(self, usuario, imageName, imageBinary):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -146,8 +154,20 @@ class interfaceFrontEnd:
     # DESORGANIZADO
 
     
+    
+    
+
+
+
+    
     def retornaInfosUsuario(self, usuario):
         return implementacaoBD().retornaInfosUsuario(usuario)
+    
+    def cadastraImagem(self, usuario, imageName, imageBinary):
+        return implementacaoBD().cadastraImagem(usuario, imageName, imageBinary)
+
+    def salvaImagem(self, imageFilename, usuario):
+        return implementacaoBD().salvaImagemUsuario(usuario, imageFilename)
     
     def getUsersPendentes(self):
         return implementacaoBD().getUsersPendentes()
