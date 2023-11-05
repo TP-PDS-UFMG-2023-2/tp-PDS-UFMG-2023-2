@@ -10,6 +10,8 @@ def showPagesAll():
         Page("./paginasFrontEnd/meuPerfil.py", "Meu perfil"),
         Page("./paginasFrontEnd/materias.py", "Matérias"),
         Page("./paginasFrontEnd/fazerReviews.py", "Fazer review"),
+        Page("./paginasFrontEnd/adminValidarUsuario.py", "[Admin] Validar usuário"),
+        Page("./paginasFrontEnd/adminCriarRemoverMateria.py", "[Admin] Criar e remover matérias"),
         Page("./paginasFrontEnd/quemsomos.py", "Quem Somos?"),
         Page("./paginasFrontEnd/faq.py", "FAQ")
     ])
@@ -24,7 +26,7 @@ def pagDeslogado():
     #    Page("./paginasFrontEnd/quemsomos.py", "Quem somos?"),
     #    Page("./paginasFrontEnd/faq.py", "FAQ")
     #])
-    hide_pages(["Meu perfil", "Matérias", "Fazer review"])
+    hide_pages(["Meu perfil", "Matérias", "Fazer review", "[Admin] Validar usuário", "[Admin] Criar e remover matérias"])
 
 
 def pagLogado():
@@ -37,7 +39,7 @@ def pagLogado():
     #    Page("./paginasFrontEnd/quemsomos.py", "Quem somos?"),
     #    Page("./paginasFrontEnd/faq.py", "FAQ")
     #])
-    hide_pages(["Login", "Cadastro"])
+    hide_pages(["Login", "Cadastro", "[Admin] Validar usuário", "[Admin] Criar e remover matérias"])
 
 def pagAdmin():
     #showPagesAll()
