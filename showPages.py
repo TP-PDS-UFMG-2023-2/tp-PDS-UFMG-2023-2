@@ -4,13 +4,15 @@ from st_pages import Page, show_pages, hide_pages
 
 def showPagesAll():
     show_pages([
-        Page("./dccReview.py", "DCC Rating")
+        Page("./dccReview.py", "DCC Rating"),
+        Page("./paginasFrontEnd/materias.py", "Matérias"),
+        Page("./paginasFrontEnd/fazerReviews.py", "Fazer review")
     ])
 
 
 def pagDeslogado():
     #showPagesAll()
-    hide_pages([])
+    hide_pages(["Matérias", "Fazer review"])
 
 
 def pagLogado():
@@ -18,8 +20,8 @@ def pagLogado():
     hide_pages([])
 
 def pagAdmin():
-    #showPagesAll()
-    hide_pages([])
+    #showPagesAll() 
+    hide_pages(["Matérias", "Fazer review"])
 
 def atualizarEstado(estado:str):
     #st.rerun()
