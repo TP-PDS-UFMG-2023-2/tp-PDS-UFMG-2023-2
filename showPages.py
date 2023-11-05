@@ -6,6 +6,8 @@ def showPagesAll():
     show_pages([
         Page("./dccReview.py", "DCC Rating"),
         Page("./paginasFrontEnd/login.py", "Login"),
+        Page("./paginasFrontEnd/cadastro.py", "Cadastro"),
+        Page("./paginasFrontEnd/meuPerfil.py", "Meu perfil"),
         Page("./paginasFrontEnd/materias.py", "Matérias"),
         Page("./paginasFrontEnd/fazerReviews.py", "Fazer review"),
         Page("./paginasFrontEnd/quemsomos.py", "Quem Somos?"),
@@ -22,7 +24,7 @@ def pagDeslogado():
     #    Page("./paginasFrontEnd/quemsomos.py", "Quem somos?"),
     #    Page("./paginasFrontEnd/faq.py", "FAQ")
     #])
-    hide_pages(["Matérias", "Fazer review"])
+    hide_pages(["Meu perfil", "Matérias", "Fazer review"])
 
 
 def pagLogado():
@@ -35,7 +37,7 @@ def pagLogado():
     #    Page("./paginasFrontEnd/quemsomos.py", "Quem somos?"),
     #    Page("./paginasFrontEnd/faq.py", "FAQ")
     #])
-    hide_pages(["Login"])
+    hide_pages(["Login", "Cadastro"])
 
 def pagAdmin():
     #showPagesAll()
@@ -46,7 +48,7 @@ def pagAdmin():
     #    Page("./paginasFrontEnd/quemsomos.py", "Quem somos?"),
     #    Page("./paginasFrontEnd/faq.py", "FAQ")
     #])
-    hide_pages(["Login", "Matérias", "Fazer review"])
+    hide_pages(["Login", "Cadastro", "Meu perfil", "Matérias", "Fazer review"])
 
 def atualizarEstado(estado:str):
     #st.rerun()
