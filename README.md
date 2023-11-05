@@ -1,4 +1,4 @@
-![image](https://github.com/TP-PDS-UFMG-2023-2/tp-PDS-UFMG-2023-2/assets/36747760/79adba11-ce48-41e0-b2b3-0feded3c8994)# tp-PDS-UFMG-2023-2
+# tp-PDS-UFMG-2023-2
 Repositorio destinado ao trabalho pratico principal da disciplina de pratica e desenvolvimento de software da UFMG no semestre de 2023/2.
 
 ## Objetivo
