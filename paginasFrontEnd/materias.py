@@ -32,7 +32,7 @@ for i in range(len(listaMateriasSelecionadas)):
 
         total = 0
         for review in reviews:
-            total += int(review[3]) / 10
+            total += int(review[3])
         if len(reviews) > 0:
             st.write("Média: %.3f"%(total / len(reviews)))
 

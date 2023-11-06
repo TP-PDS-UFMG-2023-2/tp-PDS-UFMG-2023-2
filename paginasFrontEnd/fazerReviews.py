@@ -46,7 +46,7 @@ elif permLvl == 1 or permLvl == 2:
 
 
     if(st.button("Submeter")):
-        status = iFE().cadastraReview(int(st.session_state["id_user"]), int(id_materia), int(nota), comentario)
+        status = iFE().cadastraReview(int(st.session_state["user_id"]), int(id_materia), int(nota), comentario)
         if status == 0:
             st.write("Submeteu a review")
             st.write("Sua nota é %d"%nota)
