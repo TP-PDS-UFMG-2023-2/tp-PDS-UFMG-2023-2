@@ -1,0 +1,9 @@
+streamlit
+st-pages
+passlib
+Pillow
+pandas
+pytest
+coverage==7.2.5
+pytest-cov==4.0.0
+selenium>=4
