@@ -30,7 +30,7 @@ jobs:
         if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
     - name: Run tests and collect coverage
       run: |
-        pytest tests --cov
+        python -m pytest --cov=. tests/
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
     
