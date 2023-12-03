@@ -1,0 +1,8 @@
+[run]
+omit = 
+	core.py
+	dccReview.py
+	init.py
+	showPages.py
+	test.py
+	tests/*
