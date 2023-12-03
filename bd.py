@@ -105,12 +105,11 @@ class implementacaoBD(interfaceBD):
         return 0    
     def cadastraMatricula(self, usuario, matricula):
         try:
-            pass
-            #self.cursor.execute("""
-            #    UPDATE loginTable
-            #    SET matricula = "%s"
-            #    WHERE userID = %d
-            #"""%(matricula, usuario))
+            self.cursor.execute("""
+                UPDATE loginTable
+                SET matricula = "%s"
+                WHERE userID = %d
+            """%(matricula, usuario))
         except Exception as e: # pragma: no cover
             print(e)
             return -1
