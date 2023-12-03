@@ -105,6 +105,7 @@ class implementacaoBD(interfaceBD):
         return 0    
     def cadastraMatricula(self, usuario, matricula):
         try:
+            pass
             #self.cursor.execute("""
             #    UPDATE loginTable
             #    SET matricula = "%s"
