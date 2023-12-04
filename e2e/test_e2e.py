@@ -84,9 +84,72 @@ class TestEnd2End:
 
         assert nome.text.endswith(user)
 
-    # Eu, como gerente do sistema, gostaria de adicionar disciplinas a serem avaliadas
-    # Eu, como aluno e usuário, gostaria de votar em uma disciplina com a possibilidade de um comentário opcional
-    # Eu, como aluno e usuário, gostaria de pesquisar dentre as disciplinas existentes no sistema e ver seus reviews
+    def test_cadastra_disciplina(self):
+        # Eu, como gerente do sistema, gostaria de adicionar disciplinas a serem avaliadas
+        self.loginAdmin()
+
+        self.driver.find_element(By.LINK_TEXT, "[Admin] Criar e remover matérias").click()
+        time.sleep(1)
+
+        code = self.randomStr(3, string.ascii_uppercase) + self.randomStr(3, string.digits)
+        name = self.randomStr(20, string.ascii_letters + " ")
+        prof = self.randomStr(20, string.ascii_letters + " ")
+
+        self.driver.find_element(By.CSS_SELECTOR, "input[aria-label='Código da matéria.']").send_keys(code, Keys.ENTER)
+        self.driver.find_element(By.CSS_SELECTOR, "input[aria-label='Nome da matéria.']").send_keys(name, Keys.ENTER)
+        self.driver.find_element(By.CSS_SELECTOR, "input[aria-label='Professor da matéria.']").send_keys(prof, Keys.ENTER)
+
+        self.driver.find_element(By.CSS_SELECTOR, "button[data-testid='baseButton-secondary']").click()
+        time.sleep(1)
+
+        self.logout()
+        self.login('user', 'user')
+        self.driver.find_element(By.LINK_TEXT, "Matérias").click()
+        time.sleep(1)
+
+        self.driver.find_element(By.CSS_SELECTOR, "input[aria-label='Selecione as matérias']").click()
+        time.sleep(1)
+        materias = self.driver.find_elements(By.CSS_SELECTOR, "li[role='option']")
+        materias[-1].click()
+        time.sleep(1)
+
+        assert self.driver.find_elements(By.TAG_NAME, 'p')[2].text == "Você está na aba da matéria " + code + ' - ' + prof + ' - ' + name
+
+    def test_cadastra_review(self):
+        # Eu, como aluno e usuário, gostaria de votar em uma disciplina com a possibilidade de um comentário opcional
+        self.login("user", "user")
+        self.driver.find_element(By.LINK_TEXT, "Fazer review").click()
+        time.sleep(1)
+
+        nota = 5
+        comentario = "Gostei bastante!"
+
+        iframe = self.driver.find_element(By.CSS_SELECTOR, "iframe[title='streamlit_star_rating.st_star_rating']")
+
+        self.driver.switch_to.frame(iframe)
+        self.driver.find_element(By.CSS_SELECTOR, "li[aria-posinset='5']").click()
+        self.driver.switch_to.default_content()
+
+        self.driver.find_element(By.CSS_SELECTOR, "textarea").send_keys(Keys.CONTROL + 'a', Keys.DELETE)
+        self.driver.find_element(By.CSS_SELECTOR, "textarea").send_keys(comentario)
+        self.driver.find_element(By.CSS_SELECTOR, "button[data-testid='baseButton-secondary']").click()
+
+        # Eu, como aluno e usuário, gostaria de pesquisar dentre as disciplinas existentes no sistema e ver seus reviews
+        self.driver.find_element(By.LINK_TEXT, "Matérias").click()
+        time.sleep(1)
+
+        self.driver.find_element(By.CSS_SELECTOR, "input[aria-label='Selecione as matérias']").click()
+        time.sleep(1)
+        materias = self.driver.find_elements(By.CSS_SELECTOR, "li[role='option']")
+        materias[0].click()
+        time.sleep(1)
+
+        self.driver.find_element(By.CSS_SELECTOR, 'ul[data-baseweb="accordion"]').click()
+        time.sleep(1)
+        assert self.driver.find_elements(By.CSS_SELECTOR, 'p')[-1].text == comentario
+        
+        self.logout()
+
 
     def loginAdmin(self):
         self.login("admin", "admin")
@@ -126,7 +189,7 @@ class TestEnd2End:
     def logout(self):
         self.driver.get("http://127.0.0.1:8501")
 
-    def randomStr(self, n, letters = string.ascii_letters + string.digits + string.punctuation + string.whitespace):
+    def randomStr(self, n, letters = string.ascii_letters + string.digits + string.punctuation + " "):
         return ''.join(random.choice(letters) for i in range (n))
 
     
